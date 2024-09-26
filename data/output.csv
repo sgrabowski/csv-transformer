@@ -1,0 +1,4 @@
+﻿record_id;gender;height_cm;weight_kg;pregnant;pregnancy_duration_weeks;date_diagnosis
+1;2;169;64;1;32;2016-07-21
+2;1;169;89;0;;2015-02-04
+3;2;155;54;0;;2016-12-21

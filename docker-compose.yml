@@ -1,0 +1,14 @@
+version:  '3.4'
+
+services:
+  wait:
+    image: dokku/wait
+
+  php:
+    build:
+      context: .
+      dockerfile: build/docker/php/Dockerfile
+    volumes:
+      - .:/srv/app
+    tty: true
+    stdin_open: true
