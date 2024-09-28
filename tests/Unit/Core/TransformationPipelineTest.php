@@ -73,6 +73,10 @@ final class TransformationPipelineTest extends TestCase
             ->method('transform')
             ->willReturn($newFieldValue)
         ;
+        $this->fieldValueTransformer->expects(self::any())
+            ->method('supports')
+            ->willReturn(true)
+        ;
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
         $pipeline->setFieldValueTransformerForGroup('group1', $this->fieldValueTransformer);
@@ -93,6 +97,10 @@ final class TransformationPipelineTest extends TestCase
         $this->fieldValueTransformer->expects(self::once())
             ->method('transform')
             ->willThrowException(new \Exception('Transformation failed'))
+        ;
+        $this->fieldValueTransformer->expects(self::any())
+            ->method('supports')
+            ->willReturn(true)
         ;
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
@@ -135,6 +143,29 @@ final class TransformationPipelineTest extends TestCase
         ;
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
+
+        $pipeline->run();
+    }
+
+    public function testRunThrowsTransformationExceptionOnUnsupportedType(): void
+    {
+        $this->expectException(TransformationException::class);
+
+        $this->inputProvider->expects(self::once())
+            ->method('next')
+            ->willReturn($this->record)
+        ;
+
+        $this->fieldValueTransformer->expects(self::never())
+            ->method('transform')
+        ;
+        $this->fieldValueTransformer->expects(self::any())
+            ->method('supports')
+            ->willReturn(false)
+        ;
+
+        $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
+        $pipeline->setFieldValueTransformerForGroup('group1', $this->fieldValueTransformer);
 
         $pipeline->run();
     }

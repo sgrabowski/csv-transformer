@@ -5,6 +5,7 @@ namespace App\Core;
 use App\Core\Exception\InputProviderException;
 use App\Core\Exception\OutputHandlerException;
 use App\Core\Exception\TransformationException;
+use App\Core\Exception\UnsupportedTransformationException;
 use App\Core\Value\Field;
 use App\Core\Value\Record;
 
@@ -78,11 +79,20 @@ final class TransformationPipeline
         return new Record($transformedFields);
     }
 
+    /**
+     * @throws UnsupportedTransformationException
+     */
     private function transformField(Field $field): Field
     {
         $newValue = $field->value;
         if ($this->hasValueTransformer($field)) {
-            $newValue = $this->fieldValueTransformers[$field->groupName]->transform($field->value);
+            $transformer = $this->fieldValueTransformers[$field->groupName];
+
+            if (!$transformer->supports($field->value)) {
+                throw new UnsupportedTransformationException($field, $transformer);
+            }
+
+            $newValue = $transformer->transform($field->value);
         }
 
         $newGroupName = $this->groupTransformationSet[$field->groupName] ?? $field->groupName;
