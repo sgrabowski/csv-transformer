@@ -11,6 +11,8 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@PSR12' => true,
+        'php_unit_test_class_requires_covers' => false,
+        'php_unit_internal_class' => false,
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true)

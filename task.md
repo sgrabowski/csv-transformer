@@ -50,15 +50,13 @@ Proposed Solution
 
 ### Flow
 Create a configurable pipeline consisting of more or less these steps:
-* Input Reader
+* Input Processing (this should happen outside of core pipeline flow to allow for maximum flexibility)
   * Reads input from a file, feed, api, etc. Handles I/O operations and errors.
-* Input Parser
-  * Transforms the input values into Record objects
-* Input Validator
-  * Validates Field objects in each Record
-* Field Value Transformer
+  * Transforms the input values into Record/Field objects
+  * Performs validation if necessary
+* Field Value Transformation
   * Transforms the field value to another format or type.
-* Field Metadata Transformer
+* Field Metadata Transformation
   * Changes the field metadata, such as the column name for the output.
-* Output Serializer
-  * Serializes the resulting Records / Rows into desired output format
+* Output Processing
+  * Outputs the resulting Records / Rows into desired format
