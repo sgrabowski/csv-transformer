@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\FieldValueTransformer;
 
-use App\Application\FieldValue\IntegerValue;
+use App\Application\FieldValue\NumericValue;
 use App\Application\FieldValue\StringValue;
 use App\Application\FieldValueTransformer\Exception\UnexpectedTypeException;
 use App\Application\FieldValueTransformer\Exception\UnmappedValueException;
@@ -22,7 +22,7 @@ final class StringToIntegerMappingTransformer implements FieldValueTransformer
      * @throws UnexpectedTypeException
      * @throws UnmappedValueException
      */
-    public function transform(FieldValue $value): IntegerValue
+    public function transform(FieldValue $value): NumericValue
     {
         if (!$value instanceof StringValue) {
             throw new UnexpectedTypeException($value, StringValue::class);
@@ -33,7 +33,7 @@ final class StringToIntegerMappingTransformer implements FieldValueTransformer
             throw new UnmappedValueException($key);
         }
 
-        return new IntegerValue($this->mapping[$key]);
+        return new NumericValue($this->mapping[$key]);
     }
 
     public function supports(FieldValue $value): bool

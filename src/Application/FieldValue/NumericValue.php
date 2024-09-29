@@ -6,9 +6,9 @@ namespace App\Application\FieldValue;
 
 use App\Core\Value\FieldValue;
 
-final readonly class IntegerValue implements FieldValue
+final readonly class NumericValue implements FieldValue
 {
-    public function __construct(private int $value)
+    public function __construct(private int | float $value)
     {
     }
 
@@ -17,7 +17,7 @@ final readonly class IntegerValue implements FieldValue
         return (string) $this->value;
     }
 
-    public function internalValue(): int
+    public function internalValue(): int | float
     {
         return $this->value;
     }

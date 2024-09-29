@@ -15,7 +15,7 @@ class UnsupportedTransformationException extends \Exception
             \sprintf(
                 'Transformer "%s" does not support field values of type "%s"',
                 $transformer::class,
-                $field->value::class
+                $field->value::class,
             ),
         );
     }

@@ -13,7 +13,7 @@ final class TransformationException extends \Exception
         parent::__construct(
             \sprintf('Failed to transform field "%s" with value "%s"', Field::class, $field->value->toString()),
             0,
-            $previous
+            $previous,
         );
     }
 }

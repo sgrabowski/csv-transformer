@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Application\FieldValueTransformer;
 
+use App\Application\FieldValue\NumericValue;
+use App\Application\FieldValueTransformer\Exception\UnexpectedTypeException;
+use App\Application\FieldValueTransformer\MultiplicationTransformer;
 use App\Core\Value\FieldValue;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use App\Application\FieldValue\IntegerValue;
-use App\Application\FieldValueTransformer\Exception\UnexpectedTypeException;
-use App\Application\FieldValueTransformer\MultiplicationTransformer;
 
 class MultiplicationTransformerTest extends TestCase
 {
@@ -17,11 +17,11 @@ class MultiplicationTransformerTest extends TestCase
     public function test_transform(int $multiplier, int $inputValue, int $expectedResult): void
     {
         $transformer = new MultiplicationTransformer($multiplier);
-        $integerValue = new IntegerValue($inputValue);
+        $integerValue = new NumericValue($inputValue);
 
         $result = $transformer->transform($integerValue);
 
-        self::assertInstanceOf(IntegerValue::class, $result);
+        self::assertInstanceOf(NumericValue::class, $result);
         self::assertSame($expectedResult, $result->internalValue());
     }
 

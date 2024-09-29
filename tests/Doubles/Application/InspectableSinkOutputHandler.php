@@ -21,6 +21,6 @@ class InspectableSinkOutputHandler implements OutputHandler
 
     public function receiveNextInHandledOrder(): ?Record
     {
-        return array_shift($this->sink);
+        return \array_shift($this->sink);
     }
 }

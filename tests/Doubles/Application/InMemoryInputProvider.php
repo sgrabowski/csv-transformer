@@ -21,6 +21,7 @@ class InMemoryInputProvider implements InputProvider
      * @var array<Record>
      */
     private array $records;
+
     private \Generator $recordsGenerator;
 
     public function __construct()

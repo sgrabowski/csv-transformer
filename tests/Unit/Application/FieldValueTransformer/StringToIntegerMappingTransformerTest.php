@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Application\FieldValueTransformer;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use App\Application\FieldValue\NumericValue;
 use App\Application\FieldValue\StringValue;
-use App\Application\FieldValue\IntegerValue;
-use App\Application\FieldValueTransformer\StringToIntegerMappingTransformer;
 use App\Application\FieldValueTransformer\Exception\UnexpectedTypeException;
 use App\Application\FieldValueTransformer\Exception\UnmappedValueException;
+use App\Application\FieldValueTransformer\StringToIntegerMappingTransformer;
 use App\Core\Value\FieldValue;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
 class StringToIntegerMappingTransformerTest extends TestCase
 {
@@ -33,7 +33,7 @@ class StringToIntegerMappingTransformerTest extends TestCase
 
         $result = $this->transformer->transform($stringValue);
 
-        self::assertInstanceOf(IntegerValue::class, $result);
+        self::assertInstanceOf(NumericValue::class, $result);
         self::assertSame($expectedInteger, $result->internalValue());
     }
 

@@ -30,10 +30,10 @@ class TransformationPipelineTest extends TestCase
         $this->pipeline->setFieldValueTransformerForGroup(
             InMemoryInputProvider::GROUP_NAME,
             new MixedCallbackTransformer(static function (MixedValue $value) {
-                $upperCased = strtoupper($value->toString());
+                $upperCased = \strtoupper($value->toString());
 
                 return new MixedValue($upperCased, $upperCased);
-            })
+            }),
         );
 
         $this->pipeline->setFieldValueTransformerForGroup(
@@ -47,7 +47,7 @@ class TransformationPipelineTest extends TestCase
                 }
 
                 return new MixedValue($newValue, $newValue);
-            })
+            }),
         );
 
         $this->pipeline->setGroupNameTransformation(InMemoryInputProvider::GROUP_NAME, self::GROUP_NAME_NEW);

@@ -6,7 +6,7 @@ namespace App\Application\FieldValue;
 
 use App\Core\Value\FieldValue;
 
-final readonly class EmptyValue implements FieldValue
+final readonly class NullValue implements FieldValue
 {
     public function toString(): string
     {

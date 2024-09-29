@@ -7,14 +7,14 @@ namespace App\Tests\Unit\Core;
 use App\Core\Exception\InputProviderException;
 use App\Core\Exception\OutputHandlerException;
 use App\Core\Exception\TransformationException;
-use PHPUnit\Framework\TestCase;
+use App\Core\FieldValueTransformer;
+use App\Core\InputProvider;
+use App\Core\OutputHandler;
 use App\Core\TransformationPipeline;
 use App\Core\Value\Field;
 use App\Core\Value\FieldValue;
 use App\Core\Value\Record;
-use App\Core\InputProvider;
-use App\Core\OutputHandler;
-use App\Core\FieldValueTransformer;
+use PHPUnit\Framework\TestCase;
 
 final class TransformationPipelineTest extends TestCase
 {
@@ -49,8 +49,7 @@ final class TransformationPipelineTest extends TestCase
     {
         $this->inputProvider->expects(self::exactly(2))
             ->method('next')
-            ->willReturnOnConsecutiveCalls($this->record, null)
-        ;
+            ->willReturnOnConsecutiveCalls($this->record, null);
 
         $this->outputHandler->expects(self::once())
             ->method('handle')
@@ -65,20 +64,17 @@ final class TransformationPipelineTest extends TestCase
                 $this->assertSame('value2', $field2->value->toString());
 
                 return true;
-            }))
-        ;
+            }));
 
         $newFieldValue = $this->createMock(FieldValue::class);
         $newFieldValue->method('toString')->willReturn('new-value');
 
         $this->fieldValueTransformer->expects(self::any())
             ->method('transform')
-            ->willReturn($newFieldValue)
-        ;
+            ->willReturn($newFieldValue);
         $this->fieldValueTransformer->expects(self::any())
             ->method('supports')
-            ->willReturn(true)
-        ;
+            ->willReturn(true);
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
         $pipeline->setFieldValueTransformerForGroup('group1', $this->fieldValueTransformer);
@@ -93,17 +89,14 @@ final class TransformationPipelineTest extends TestCase
 
         $this->inputProvider->expects(self::once())
             ->method('next')
-            ->willReturn($this->record)
-        ;
+            ->willReturn($this->record);
 
         $this->fieldValueTransformer->expects(self::once())
             ->method('transform')
-            ->willThrowException(new \Exception('Transformation failed'))
-        ;
+            ->willThrowException(new \Exception('Transformation failed'));
         $this->fieldValueTransformer->expects(self::any())
             ->method('supports')
-            ->willReturn(true)
-        ;
+            ->willReturn(true);
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
         $pipeline->setFieldValueTransformerForGroup('group1', $this->fieldValueTransformer);
@@ -117,13 +110,11 @@ final class TransformationPipelineTest extends TestCase
 
         $this->inputProvider->expects(self::once())
             ->method('next')
-            ->willReturn($this->record)
-        ;
+            ->willReturn($this->record);
 
         $this->outputHandler->expects(self::once())
             ->method('handle')
-            ->willThrowException(new \Exception('Output handling failed'))
-        ;
+            ->willThrowException(new \Exception('Output handling failed'));
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
 
@@ -136,13 +127,11 @@ final class TransformationPipelineTest extends TestCase
 
         $this->inputProvider->expects(self::once())
             ->method('next')
-            ->willReturn($this->record)
-        ;
+            ->willReturn($this->record);
 
         $this->inputProvider->expects(self::once())
             ->method('next')
-            ->willThrowException(new \Exception('Input provider failed'))
-        ;
+            ->willThrowException(new \Exception('Input provider failed'));
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
 
@@ -155,16 +144,13 @@ final class TransformationPipelineTest extends TestCase
 
         $this->inputProvider->expects(self::once())
             ->method('next')
-            ->willReturn($this->record)
-        ;
+            ->willReturn($this->record);
 
         $this->fieldValueTransformer->expects(self::never())
-            ->method('transform')
-        ;
+            ->method('transform');
         $this->fieldValueTransformer->expects(self::any())
             ->method('supports')
-            ->willReturn(false)
-        ;
+            ->willReturn(false);
 
         $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
         $pipeline->setFieldValueTransformerForGroup('group1', $this->fieldValueTransformer);
