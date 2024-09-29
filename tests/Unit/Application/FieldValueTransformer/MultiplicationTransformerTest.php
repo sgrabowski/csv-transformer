@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Application\FieldValueTransformer;
 
 use App\Core\Value\FieldValue;
@@ -12,7 +14,7 @@ use App\Application\FieldValueTransformer\MultiplicationTransformer;
 class MultiplicationTransformerTest extends TestCase
 {
     #[DataProvider('provideTransformCases')]
-    public function testTransform(int $multiplier, int $inputValue, int $expectedResult): void
+    public function test_transform(int $multiplier, int $inputValue, int $expectedResult): void
     {
         $transformer = new MultiplicationTransformer($multiplier);
         $integerValue = new IntegerValue($inputValue);
@@ -23,7 +25,7 @@ class MultiplicationTransformerTest extends TestCase
         self::assertSame($expectedResult, $result->internalValue());
     }
 
-    public function testTransformThrowsUnexpectedTypeException(): void
+    public function test_transform_throws_unexpected_type_exception(): void
     {
         $transformer = new MultiplicationTransformer(2);
 

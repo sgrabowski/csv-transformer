@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Application\FieldValueTransformer;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -25,7 +27,7 @@ class StringToIntegerMappingTransformerTest extends TestCase
     }
 
     #[DataProvider('provideSuccessfulMappingCases')]
-    public function testTransformSuccessfullyMapsStringToInteger(string $inputString, int $expectedInteger): void
+    public function test_transform_successfully_maps_string_to_integer(string $inputString, int $expectedInteger): void
     {
         $stringValue = new StringValue($inputString);
 
@@ -35,7 +37,7 @@ class StringToIntegerMappingTransformerTest extends TestCase
         self::assertSame($expectedInteger, $result->internalValue());
     }
 
-    public function testTransformThrowsUnexpectedTypeException(): void
+    public function test_transform_throws_unexpected_type_exception(): void
     {
         $nonStringValue = $this->createMock(FieldValue::class);
 
@@ -44,7 +46,7 @@ class StringToIntegerMappingTransformerTest extends TestCase
         $this->transformer->transform($nonStringValue);
     }
 
-    public function testTransformThrowsUnmappedValueException(): void
+    public function test_transform_throws_unmapped_value_exception(): void
     {
         $unmappedStringValue = new StringValue('unmapped');
 
@@ -54,7 +56,7 @@ class StringToIntegerMappingTransformerTest extends TestCase
         $this->transformer->transform($unmappedStringValue);
     }
 
-    public function testAddingNewMappingOverridesExistingMapping(): void
+    public function test_adding_new_mapping_overrides_existing_mapping(): void
     {
         $stringValue = new StringValue('one');
         $result = $this->transformer->transform($stringValue);

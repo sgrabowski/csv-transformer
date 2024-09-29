@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Application\FieldValueTransformer;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -13,7 +15,7 @@ use App\Core\Value\FieldValue;
 class DateTimeFormatTransformerTest extends TestCase
 {
     #[DataProvider('provideTransformCases')]
-    public function testTransform(\DateTimeImmutable $dateTime, string $targetFormat, string $expectedResult): void
+    public function test_transform(\DateTimeImmutable $dateTime, string $targetFormat, string $expectedResult): void
     {
         $transformer = new DateTimeFormatTransformer($targetFormat);
         $dateTimeValue = new DateTimeValue($dateTime);
@@ -24,7 +26,7 @@ class DateTimeFormatTransformerTest extends TestCase
         self::assertSame($expectedResult, $result->internalValue());
     }
 
-    public function testTransformThrowsUnexpectedTypeException(): void
+    public function test_transform_throws_unexpected_type_exception(): void
     {
         $transformer = new DateTimeFormatTransformer('Y-m-d');
 

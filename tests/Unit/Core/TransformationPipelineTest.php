@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Core;
 
 use App\Core\Exception\InputProviderException;
@@ -43,7 +45,7 @@ final class TransformationPipelineTest extends TestCase
         $this->record = new Record([$this->field1, $this->field2]);
     }
 
-    public function testRunSuccessfullyTransformsRecordsAndPassesToOutputHandler(): void
+    public function test_run_successfully_transforms_records_and_passes_to_output_handler(): void
     {
         $this->inputProvider->expects(self::exactly(2))
             ->method('next')
@@ -85,7 +87,7 @@ final class TransformationPipelineTest extends TestCase
         $pipeline->run();
     }
 
-    public function testRunWrapsTransformationExceptions(): void
+    public function test_run_wraps_transformation_exceptions(): void
     {
         $this->expectException(TransformationException::class);
 
@@ -109,7 +111,7 @@ final class TransformationPipelineTest extends TestCase
         $pipeline->run();
     }
 
-    public function testRunWrapsOutputHandlerException(): void
+    public function test_run_wraps_output_handler_exception(): void
     {
         $this->expectException(OutputHandlerException::class);
 
@@ -128,7 +130,7 @@ final class TransformationPipelineTest extends TestCase
         $pipeline->run();
     }
 
-    public function testRunWrapsInputProviderException(): void
+    public function test_run_wraps_input_provider_exception(): void
     {
         $this->expectException(InputProviderException::class);
 
@@ -147,7 +149,7 @@ final class TransformationPipelineTest extends TestCase
         $pipeline->run();
     }
 
-    public function testRunThrowsTransformationExceptionOnUnsupportedType(): void
+    public function test_run_throws_transformation_exception_on_unsupported_type(): void
     {
         $this->expectException(TransformationException::class);
 
