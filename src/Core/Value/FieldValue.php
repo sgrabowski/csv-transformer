@@ -6,5 +6,5 @@ interface FieldValue
 {
     public function toString(): string;
 
-    public static function fromString(string $stringRepresentation): self;
+    public function internalValue(): mixed;
 }
