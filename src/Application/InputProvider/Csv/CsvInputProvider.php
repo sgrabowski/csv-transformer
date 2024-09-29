@@ -42,6 +42,7 @@ readonly class CsvInputProvider implements InputProvider
             return null;
         }
 
+
         if (\count($line) !== $this->fieldCount) {
             throw new \RuntimeException(
                 \sprintf(

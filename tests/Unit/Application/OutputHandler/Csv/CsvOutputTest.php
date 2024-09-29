@@ -32,11 +32,11 @@ class CsvOutputTest extends TestCase
 
         $this->csvWriter->expects(self::once())
             ->method('writeHeaders')
-            ->with('group1,group2');
+            ->with(['group1', 'group2']);
 
         $this->csvWriter->expects(self::once())
             ->method('write')
-            ->with('value1,value2');
+            ->with(['value1', 'value2']);
 
         $this->csvOutput->handle($record);
     }
@@ -62,7 +62,7 @@ class CsvOutputTest extends TestCase
 
         $this->csvWriter->expects(self::once())
             ->method('write')
-            ->with('value3,value4');
+            ->with(['value3', 'value4']);
 
         $this->csvOutput->handle($record2);
     }

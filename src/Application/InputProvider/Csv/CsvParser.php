@@ -19,7 +19,7 @@ interface CsvParser
      * Returns null if there is no next line
      * Array keys MUST be the same as in getHeaders method.
      *
-     * @return array<string>
+     * @return array<string>|null
      */
     public function nextLine(): ?array;
 }

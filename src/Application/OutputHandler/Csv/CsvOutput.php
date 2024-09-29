@@ -25,7 +25,10 @@ class CsvOutput implements OutputHandler
         $this->csvWriter->write($this->extractValues($record));
     }
 
-    private function extractHeaders(Record $record): string
+    /**
+     * @return array<string>
+     */
+    private function extractHeaders(Record $record): array
     {
         $values = [];
 
@@ -33,10 +36,13 @@ class CsvOutput implements OutputHandler
             $values[] = $field->groupName;
         }
 
-        return $this->formatInCsv($values);
+        return $values;
     }
 
-    private function extractValues(Record $record): string
+    /**
+     * @return array<string>
+     */
+    private function extractValues(Record $record): array
     {
         $values = [];
 
@@ -44,14 +50,11 @@ class CsvOutput implements OutputHandler
             $values[] = $field->value->toString();
         }
 
-        return $this->formatInCsv($values);
+        return $values;
     }
 
-    /**
-     * @param array<string> $values
-     */
-    private function formatInCsv(array $values): string
+    public function finish(): void
     {
-        return \implode(',', $values);
+        $this->csvWriter->finish();
     }
 }

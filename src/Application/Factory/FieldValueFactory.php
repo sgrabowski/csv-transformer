@@ -28,13 +28,26 @@ final readonly class FieldValueFactory
 
         switch ($fieldType) {
             case StringValue::class:
-                return new StringValue($value);
+                return new StringValue((string) $value);
             case NumericValue::class:
-                return new NumericValue($value);
+                if (\is_int($value) || \is_float($value)) {
+                    return new NumericValue($value);
+                }
+
+                if ($this->isFloatString($value)) {
+                    return new NumericValue((float) $value);
+                }
+
+                return new NumericValue((int) $value);
             case DateTimeValue::class:
                 return new DateTimeValue(new \DateTimeImmutable($value));
         }
 
         throw new \RuntimeException(\sprintf('Field type "%s" is not set up in the factory', $fieldType));
+    }
+
+    private function isFloatString(string $str): bool
+    {
+        return \is_numeric($str) && (\str_contains($str, '.') || \str_contains($str, 'e'));
     }
 }

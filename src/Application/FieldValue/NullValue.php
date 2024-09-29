@@ -8,9 +8,9 @@ use App\Core\Value\FieldValue;
 
 final readonly class NullValue implements FieldValue
 {
-    public function toString(): string
+    public function toString(): ?string
     {
-        return '';
+        return null;
     }
 
     public function internalValue(): null

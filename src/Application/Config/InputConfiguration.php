@@ -48,6 +48,10 @@ final class InputConfiguration
 
     public function getInputType(string $group): string
     {
+        if (!\array_key_exists($group, $this->inputTypes)) {
+            throw new \RuntimeException(\sprintf('No input type defined for group "%s"', $group));
+        }
+
         return $this->inputTypes[$group];
     }
 

@@ -6,7 +6,17 @@ namespace App\Application\OutputHandler\Csv;
 
 interface CsvWriter
 {
-    public function writeHeaders(string $headers): void;
+    /**
+     * @param array<string> $headers
+     */
+    public function writeHeaders(array $headers): void;
 
-    public function write(string $data): void;
+    /**
+     * @param array<string> $data
+     */
+    public function write(array $data): void;
+
+    public function finish(): void;
+
+    public function setDelimiter(string $delimiter): void;
 }

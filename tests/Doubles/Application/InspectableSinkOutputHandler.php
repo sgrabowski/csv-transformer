@@ -23,4 +23,8 @@ class InspectableSinkOutputHandler implements OutputHandler
     {
         return \array_shift($this->sink);
     }
+
+    public function finish(): void
+    {
+    }
 }

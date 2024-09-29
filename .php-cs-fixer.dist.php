@@ -67,6 +67,7 @@ return (new PhpCsFixer\Config())
         'use_arrow_functions' => false,
         'whitespace_after_comma_in_array' => true,
         'yoda_style' => ['equal' => false, 'identical' => false, 'less_and_greater' => false, 'always_move_variable' => false],
+        'method_chaining_indentation' => false,
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true)

@@ -45,6 +45,12 @@ final class TransformationPipeline
                 throw new OutputHandlerException(previous: $exception);
             }
         }
+
+        try {
+            $this->outputHandler->finish();
+        } catch (\Throwable $exception) {
+            throw new OutputHandlerException(previous: $exception);
+        }
     }
 
     /**
@@ -86,7 +92,9 @@ final class TransformationPipeline
      */
     private function transformField(Field $field): Field
     {
+        $newGroupName = $this->groupTransformationSet[$field->groupName] ?? $field->groupName;
         $newValue = $field->value;
+
         if ($this->hasValueTransformer($field)) {
             $transformer = $this->fieldValueTransformers[$field->groupName];
 
@@ -96,8 +104,6 @@ final class TransformationPipeline
 
             $newValue = $transformer->transform($field->value);
         }
-
-        $newGroupName = $this->groupTransformationSet[$field->groupName] ?? $field->groupName;
 
         return new Field($newGroupName, $newValue);
     }

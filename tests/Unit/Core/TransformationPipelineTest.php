@@ -157,4 +157,20 @@ final class TransformationPipelineTest extends TestCase
 
         $pipeline->run();
     }
+
+    public function test_run_calls_finish_on_output_handler_when_no_more_input_to_process(): void
+    {
+        $this->inputProvider->expects(self::exactly(1))
+            ->method('next')
+            ->willReturn(null);
+
+        $this->outputHandler->expects(self::never())
+            ->method('handle');
+
+        $this->outputHandler->expects(self::once())
+            ->method('finish');
+
+        $pipeline = new TransformationPipeline($this->inputProvider, $this->outputHandler);
+        $pipeline->run();
+    }
 }
