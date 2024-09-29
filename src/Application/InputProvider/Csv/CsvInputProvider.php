@@ -12,7 +12,7 @@ use App\Core\InputProvider;
 use App\Core\Value\Field;
 use App\Core\Value\Record;
 
-class CsvInputProvider implements InputProvider
+readonly class CsvInputProvider implements InputProvider
 {
     /**
      * @var array<string>
@@ -22,9 +22,9 @@ class CsvInputProvider implements InputProvider
     private int $fieldCount;
 
     public function __construct(
-        private readonly CsvParser $csvParser,
-        private readonly InputConfiguration $inputConfiguration,
-        private readonly FieldValueFactory $fieldValueFactory,
+        private CsvParser $csvParser,
+        private InputConfiguration $inputConfiguration,
+        private FieldValueFactory $fieldValueFactory,
     ) {
         $this->groups = $this->csvParser->getHeaders();
         $this->fieldCount = \count($this->groups);
